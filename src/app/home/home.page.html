@@ -33,28 +33,11 @@
       </ion-item>
     </ion-list>
     <ion-button expand="full" (click)="convertCurrency()">Full Button</ion-button>
-    <ion-item>
-      <p>Última atualização há {{formatedTime}}. <a (click)="fecthData()"><ion-icon name="refresh" size="large"></ion-icon></a></p>
-    </ion-item>
     <div class="ion-padding">
-      <h1>O valor convertido é: {{covertedValue | number}}</h1>
-      <!-- <h1>Valor do(a) {{base}}:</h1>
-      <p>Última atualização há {{formatedTime}}. <a (click)="fecthData()"><ion-icon name="refresh" size="large"></ion-icon></a></p>
-      <ion-grid>
-      <ion-row *ngFor="let item of ratesKeys; let i = index">
-        <ion-col>
-          <div>
-            {{item}}
-          </div>
-        </ion-col>
-        <ion-col>
-          <div>
-            {{rates[item] | number}}
-          </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid> -->
-    <button (click)="test()">Teste</button>
+      <h2>O valor convertido é: {{covertedValue | number}}</h2>
     </div>
+    <ion-item>
+      <p>Última atualização em {{fetched_in}}. <a (click)="loadData()"><ion-icon name="refresh" size="large"></ion-icon></a></p>
+    </ion-item>
   </div>
 </ion-content>

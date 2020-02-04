@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Platform } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../services/api.service';
 import { HttpClient  } from '@angular/common/http';
 import { Storage } from '@ionic/storage';
 
@@ -13,62 +15,37 @@ export class HomePage {
   date = "";
   base = "";
   count = 0;
+  fetched_in = null;
   formatedTime = "";
   fromCurrency = "";
   toCurrency = "";
   covertedValue = 0;
   amount = 0;
 
-  constructor(private http: HttpClient, private storage: Storage) {
-    this.fecthData()
-
-    setInterval(() => {
-      this.count++;
-      this.formatTime(); 
-      }, 1000);
+  constructor(private http: HttpClient, private storage: Storage, private apiService: ApiService, private plt: Platform) {
+    this.loadData()
   }
-  
-  public changeBase() {
-    console.log(this.base);
-    // this.base = param;
-    this.fecthData();
+
+  ngOnInit() {
+    this.plt.ready().then(() => {
+      this.loadData();
+    });
+  }
+
+  loadData() {
+    this.apiService.getData().then(data => {
+      this.count = 0;
+      this.rates = data["rates"];
+      this.date = data["date"];
+      this.fetched_in = data["fetched_in"]
+      this.ratesKeys = Object.keys(data["rates"]);
+      this.storage.set('rates', data["rates"]);
+      this.formatTime()
+    });
   }
 
   public formatTime() {
-    let hours = 0;
-    let minutes = 0;
-    let seconds = 0;
-    let rest = 0;
-    let formatedTime = "";
-
-    if(this.count >= 360)  {
-      hours = this.count / 60;
-      rest = this.count - (60 * hours);
-      formatedTime = hours.toString();
-      formatedTime += " horas";
-    }
-    
-    if(rest >= 60) {
-      if(hours > 0) {
-        formatedTime += ", ";
-      }
-      minutes = this.count / 60;
-      rest = this.count - (60 * hours);
-      formatedTime = minutes.toString();
-      formatedTime += " minutos"
-    }
-
-    if(hours > 0 || minutes > 0) {
-      formatedTime += " e ";
-      formatedTime = rest.toString();      
-    }
-
-    else {
-      formatedTime = this.count.toString();
-    }
-
-    formatedTime += " segundos";
-    this.formatedTime = formatedTime;
+    console.log(this.fetched_in)
   }
 
   public convertCurrency() {
@@ -105,35 +82,5 @@ export class HomePage {
 
     console.log(convertedAmount);
     this.covertedValue = convertedAmount;
-  }
-
-  test() {
-    this.storage.get('rates')
-    .then((result) => {
-      console.log(result);
-    })
-    .catch(err => {
-      console.log(err);
-    })
-  }
-
-  fecthData() {
-    this.http.get(`https://api.exchangeratesapi.io/latest`).subscribe({
-        next: data => {
-                        console.log(data)
-                        this.count = 0;
-                        this.rates = data["rates"];
-                        this.date = data["date"];
-                        this.ratesKeys = Object.keys(data["rates"]);
-                        this.storage.set('rates', data["rates"])
-                        .then(res => {
-                          console.log(res);
-                        })
-                        .catch(err => {
-                          console.log(err);
-                        })
-                      },
-        error: err => console.log(err)
-      });
   }
 }
