@@ -6,9 +6,6 @@ import { Storage } from '@ionic/storage';
 import { Observable, from } from 'rxjs';
 import { tap, map, catchError } from "rxjs/operators";
  
-const API_STORAGE_KEY = 'specialkey';
-const API_URL = 'https://api.exchangeratesapi.io/latest';
- 
 @Injectable({
   providedIn: 'root'
 })
