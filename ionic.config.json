@@ -1,5 +1,7 @@
 {
   "name": "money-exchange-app",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

@@ -7,8 +7,54 @@
 </ion-header>
 
 <ion-content>
-  <div class="ion-padding">
-    The world is your oyster.
-    <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
+  <div>
+    <ion-item>
+      <ion-label>Quantidade:</ion-label>
+      <ion-input [(ngModel)]="amount" type="number" placeholder="Ex: 500"></ion-input>
+    </ion-item>
+    <ion-list>
+      <ion-item>
+        <ion-label>De:</ion-label>
+        <ion-select [(ngModel)]="fromCurrency">
+          <ion-select-option *ngFor="let item of ratesKeys; let i = index" ng-value="item">
+            {{item}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+    <ion-list>
+      <ion-item>
+        <ion-label>Para:</ion-label>
+        <ion-select [(ngModel)]="toCurrency">
+          <ion-select-option *ngFor="let item of ratesKeys; let i = index" ng-value="item">
+            {{item}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+    <ion-button expand="full" (click)="convertCurrency()">Full Button</ion-button>
+    <ion-item>
+      <p>Última atualização há {{formatedTime}}. <a (click)="fecthData()"><ion-icon name="refresh" size="large"></ion-icon></a></p>
+    </ion-item>
+    <div class="ion-padding">
+      <h1>O valor convertido é: {{covertedValue | number}}</h1>
+      <!-- <h1>Valor do(a) {{base}}:</h1>
+      <p>Última atualização há {{formatedTime}}. <a (click)="fecthData()"><ion-icon name="refresh" size="large"></ion-icon></a></p>
+      <ion-grid>
+      <ion-row *ngFor="let item of ratesKeys; let i = index">
+        <ion-col>
+          <div>
+            {{item}}
+          </div>
+        </ion-col>
+        <ion-col>
+          <div>
+            {{rates[item] | number}}
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid> -->
+    <button (click)="test()">Teste</button>
+    </div>
   </div>
 </ion-content>
