@@ -32,9 +32,9 @@
         </ion-select>
       </ion-item>
     </ion-list>
-    <ion-button expand="full" (click)="convertCurrency()">Full Button</ion-button>
+    <ion-button expand="full" (click)="convertCurrency()">Converter</ion-button>
     <div class="ion-padding">
-      <h2>O valor convertido é: {{covertedValue | number}}</h2>
+      <h2>O valor convertido é: {{covertedValue | number}} {{toCurrency}}</h2>
     </div>
     <ion-item>
       <p>Última atualização em {{fetched_in}}. <a (click)="loadData()"><ion-icon name="refresh" size="large"></ion-icon></a></p>
