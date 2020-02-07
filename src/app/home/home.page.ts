@@ -20,7 +20,8 @@ export class HomePage {
   fromCurrency = "";
   toCurrency = "";
   covertedValue = 0;
-  amount = 0;
+  amount = 1;
+  showResult = false;
 
   constructor(private http: HttpClient, private storage: Storage, private apiService: ApiService, private plt: Platform) {
     this.loadData()
@@ -55,12 +56,6 @@ export class HomePage {
     let fromCurrency = this.fromCurrency.trim();
     let toCurrency = this.toCurrency.trim();
     let rates = this.rates;
-    
-    console.log(rates)
-    console.log(fromCurrency)
-    console.log(toCurrency)
-    console.log(rates[fromCurrency])
-    console.log(rates[toCurrency])
 
     if(rates[fromCurrency] > 1) {
       eurAmount = amount / rates[fromCurrency];
@@ -70,8 +65,6 @@ export class HomePage {
       eurAmount = amount * rates[fromCurrency];
     }
 
-    console.log(eurAmount)
-
     if(rates[toCurrency] > 1) {
       convertedAmount = eurAmount * rates[toCurrency];
     }
@@ -80,7 +73,11 @@ export class HomePage {
       convertedAmount = eurAmount / rates[toCurrency];
     }
 
-    console.log(convertedAmount);
+    this.showResult = true;
     this.covertedValue = convertedAmount;
+  }
+
+  public reset() {
+    this.showResult = false;
   }
 }

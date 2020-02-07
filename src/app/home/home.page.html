@@ -1,40 +1,40 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar translucent>
     <ion-title>
       Money Exchange App
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div>
-    <ion-item>
-      <ion-label>Quantidade:</ion-label>
-      <ion-input [(ngModel)]="amount" type="number" placeholder="Ex: 500"></ion-input>
+<ion-content color="dark">
+  <div class="ion-padding">
+    <ion-item color="dark">
+      <ion-label>Quantia:</ion-label>
+      <ion-input [(ngModel)]="amount" type="number" placeholder="Ex: 500" (input)="reset()"></ion-input>
     </ion-item>
     <ion-list>
-      <ion-item>
+      <ion-item color="dark">
         <ion-label>De:</ion-label>
-        <ion-select [(ngModel)]="fromCurrency">
-          <ion-select-option *ngFor="let item of ratesKeys; let i = index" ng-value="item">
+        <ion-select color="dark" [(ngModel)]="fromCurrency" (ionChange)="reset()">
+          <ion-select-option color="dark" *ngFor="let item of ratesKeys; let i = index" ng-value="item">
             {{item}}
           </ion-select-option>
         </ion-select>
       </ion-item>
     </ion-list>
     <ion-list>
-      <ion-item>
+      <ion-item color="dark">
         <ion-label>Para:</ion-label>
-        <ion-select [(ngModel)]="toCurrency">
-          <ion-select-option *ngFor="let item of ratesKeys; let i = index" ng-value="item">
+        <ion-select color="dark" [(ngModel)]="toCurrency">
+          <ion-select-option color="dark" *ngFor="let item of ratesKeys; let i = index" ng-value="item">
             {{item}}
           </ion-select-option>
         </ion-select>
       </ion-item>
     </ion-list>
-    <ion-button expand="full" (click)="convertCurrency()">Converter</ion-button>
-    <div class="ion-padding">
-      <h2>O valor convertido é: {{covertedValue | number}} {{toCurrency}}</h2>
+    <ion-button color="success" expand="full" (click)="convertCurrency()">Converter</ion-button>
+    <div class="ion-padding" *ngIf="showResult">
+      <h4>Resultado: {{covertedValue | number}} {{toCurrency}}</h4>
     </div>
     <ion-item>
       <p>Última atualização em {{fetched_in}}. <a (click)="loadData()"><ion-icon name="refresh" size="large"></ion-icon></a></p>
